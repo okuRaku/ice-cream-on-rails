@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ###
-# Buy more Mint Ice Cream than available.  Should return "SORRY!"
+# Buy more Mint Ice Cream than available.  Should return "SO SORRY!"
 PUT http://localhost:3000/api/v1/buy HTTP/1.1
 Content-Type: application/json
 
