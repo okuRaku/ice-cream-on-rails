@@ -1,43 +1,69 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-Food.create(
-    name: "Shaved Ice",
-    price: "0.99",
-    initial_qty: "30",
-    sold_qty: "0"
+# since example started with dollar-like values, cents are used for price
+Truck.create(
+    name: "Jesse's First Ice Cream Truck"
 )
-Food.create(
+ShavedIce.create(
+    truck_id: 1,
+    name: "Shaved Ice",
+    price: "99",
+    initial_qty: "30",
+    sold_qty: "0",
+)
+ChocolateBar.create(
+    truck_id: 1,
     name: "Chocolate Bar",
-    price: "2.50",
+    price: "250",
     initial_qty: "10",
     sold_qty: "0"
 )
-Food.create(
-    name: "Pistachio Ice Cream",
-    price: "2.00",
+IceCream.create(
+    truck_id: 1,
+    name: "Pistachio Delight",
+    price: "200",
+    flavor: "pistachio",
     initial_qty: "12",
     sold_qty: "0"
 )
-Food.create(
-    name: "Mint Ice Cream",
-    price: "2.20",
+IceCream.create(
+    truck_id: 1,
+    name: "Maximum Enjoy Mint",
+    price: "220",
+    flavor: "mint",
     initial_qty: "5",
     sold_qty: "0"
 )
-Food.create(
-    name: "Strawberry Ice Cream",
-    price: "1.00",
+IceCream.create(
+    truck_id: 1,
+    name: "Very Strawberry",
+    price: "100",
+    flavor: "strawberry",
     initial_qty: "24",
     sold_qty: "0"
 )
-Food.create(
-    name: "Chocolate Ice Cream",
-    price: "0.50",
+IceCream.create(
+    truck_id: 1,
+    name: "Chocolate Of Course",
+    flavor: "chocolate",
+    price: "50",
     initial_qty: "36",
+    sold_qty: "0"
+)
+Truck.create(
+    name: "Jesse's Second Ice Cream Truck"
+)
+IceCream.create(
+    truck_id: 2,
+    name: "Secondary Still Nice",
+    price: "100",
+    flavor: "vanilla",
+    initial_qty: "40",
+    sold_qty: "0"
+)
+IceCream.create(
+    truck_id: 2,
+    name: "Pistachio Delight",
+    price: "300",
+    flavor: "pistachio",
+    initial_qty: "22",
     sold_qty: "0"
 )

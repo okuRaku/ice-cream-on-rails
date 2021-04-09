@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :foods, only: [:index]
-      put '/buy', to: 'foods#buy'
+      resources :trucks, only: [:index, :show]
+      put 'trucks/:id/sell', to: 'trucks#sell'
     end
   end
   

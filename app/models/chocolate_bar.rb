@@ -1,0 +1,2 @@
+class ChocolateBar < Food
+end

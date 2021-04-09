@@ -1,36 +1,109 @@
 ###
-# Show Inventory & Total Sales:
-
+# Show All Truck Food Inventory & Total Sales:
 GET http://localhost:3000/api/v1/foods
+###
+# Show Trucks & Total Sales:
+
+GET http://localhost:3000/api/v1/trucks
+
+###
+# Show Specific Truck Inventory & Total Sales:
+GET http://localhost:3000/api/v1/trucks/1
 
 ### Before using below, remember to seed the db with bin/rails db:seed
 ### bin/rails db:reset can be used to reset while testing
+
 ###
-# Buy 3 Chocolate Bars (use 4 times to trigger error)
-PUT http://localhost:3000/api/v1/buy HTTP/1.1
+### Test Script (run each request once in order, expected values in comments)
+###
+###
+# Buy some pistachio from Truck 1, should return ENJOY! 
+PUT http://localhost:3000/api/v1/trucks/1/sell HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Chocolate Bar",
-    "quantity": 3
+    "food" : {
+        "type": "IceCream",
+        "flavor": "pistachio",
+        "quantity": 3
+    }
 }
+### 
+# Rerun inventory for Truck 1, should show sold_qty=3 for Pistachio
+# and a total sales revenue of 6
+GET http://localhost:3000/api/v1/trucks/1
+### 
+# Now buy some Chocolate Bars
+PUT http://localhost:3000/api/v1/trucks/1/sell HTTP/1.1
+Content-Type: application/json
 
+{
+    "food" : {
+        "type": "ChocolateBar",
+        "quantity": 2
+    }
+}
+### 
+# Checking Truck 1 inventory should now show sold_qty=2 for Chocolate Bars
+# and a total sales revenue of 11
+GET http://localhost:3000/api/v1/trucks/1
 ###
 # Buy more Mint Ice Cream than available.  Should return "SO SORRY!"
-PUT http://localhost:3000/api/v1/buy HTTP/1.1
+PUT http://localhost:3000/api/v1/trucks/1/sell HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Mint Ice Cream",
-    "quantity": 13
+    "food" : {
+        "type": "IceCream",
+        "flavor": "mint",
+        "quantity": 13
+    }
 }
-
 ###
-# Item with high initial_qty to test sales totals
-PUT http://localhost:3000/api/v1/buy HTTP/1.1
+# Attempt to buy Chocolate Bars from Truck 2.  Should return "SO SORRY, DIDN'T STOCK THAT!"
+PUT http://localhost:3000/api/v1/trucks/2/sell HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Shaved Ice",
-    "quantity": 3
+    "food" : {
+        "type": "ChocolateBar",
+        "quantity": 4
+    }
 }
+###
+# Buy a flavor only in Truck 2.
+PUT http://localhost:3000/api/v1/trucks/2/sell HTTP/1.1
+Content-Type: application/json
+
+{
+    "food" : {
+        "type": "IceCream",
+        "flavor": "vanilla",
+        "quantity": 5
+    }
+}
+### 
+# Checking Truck 2 inventory should now show sold_qty=5 for Secondary Still Nice
+# and a total sales revenue of 5
+GET http://localhost:3000/api/v1/trucks/2
+### 
+# Looking at both trucks should now show units sold 10, total revenue 16
+GET http://localhost:3000/api/v1/trucks
+###
+# Finally, buy some pistachio from Truck 2, also
+PUT http://localhost:3000/api/v1/trucks/2/sell HTTP/1.1
+Content-Type: application/json
+
+{
+    "food" : {
+        "type": "IceCream",
+        "flavor": "pistachio",
+        "quantity": 7
+    }
+}
+###
+# Confirm we sold 3 of one type of pistachio (truck 1) and 7 of the other (truck 2)
+GET http://localhost:3000/api/v1/foods
+### 
+# And now total sales units should be 17 and total revenue 37
+GET http://localhost:3000/api/v1/trucks
