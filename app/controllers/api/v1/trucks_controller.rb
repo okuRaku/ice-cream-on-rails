@@ -21,6 +21,10 @@ class Api::V1::TrucksController < ApplicationController
 
     def sell
         truck = Truck.find_by(id: params[:id])
-        render json: truck.sell(params[:food])
+        if truck.sell(params[:food])
+            render json: {message: 'ENJOY!'}, status: 200
+        else
+            render json: {error: 'SO SORRY!'}
+        end
     end
 end
